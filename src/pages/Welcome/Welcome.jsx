@@ -15,7 +15,7 @@ export default function Welcome() {
 
 const fetchData = async () => {
   try {
-    const response = await fetch('/.netlify/functions/fetch-data');
+    const response = await fetch('/.netlify/functions/hello-world');
     const data = await response.json();
     console.log(data);
   } catch (error) {
