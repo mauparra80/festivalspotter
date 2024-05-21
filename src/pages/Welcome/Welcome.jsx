@@ -1,6 +1,10 @@
-
+import React, {useEffect} from "react";
 
 export default function Welcome() {
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -8,3 +12,13 @@ export default function Welcome() {
     </>
   )
 }
+
+const fetchData = async () => {
+  try {
+    const response = await fetch('/.netlify/functions/fetch-data');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
