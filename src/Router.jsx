@@ -2,6 +2,7 @@ import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom";
 import Welcome from "./pages/Welcome/Welcome";
 import Profile from "./pages/Profile/Profile";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import Callback from "./components/Callback";
 
 //create layout to expand for header/footer
 const Layout = () => {
@@ -28,6 +29,10 @@ export default function Router() {
         {
           path: '/profile',
           element: <Profile />,
+        },
+        {
+          path: '/callback',
+          element: <Callback />,
         },
         //catch all route for 404 
         {
