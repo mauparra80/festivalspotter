@@ -65,16 +65,19 @@ async function fetchAllSavedTracks(token) {
   const tracks = [];
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await response.json();
-    tracks.push(...data.items);
-    console.log(data.items);
+    while (url) {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      tracks.push(...data.items);
+      url = data.next;
+    }
+    
     // while (url) {
     //   const response = await axios.get(url, {
     //     headers: {

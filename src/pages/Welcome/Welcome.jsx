@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { checkIndexedDBExists, getAllTracks, getACLData } from "../../components/indexedDBManager";
+import { checkIndexedDBExists, getAllTracks, getACLData, clearDatabase } from "../../components/indexedDBManager";
 import crossReference from "../../components/functions/crossReference";
 import getJamBaseEvent from "../../components/FestivalSearchBox/jamBaseAPI";
 import FestivalSearchBox from "../../components/FestivalSearchBox/FestivalSearchBox";
@@ -15,35 +15,44 @@ TODO:
 
 export default function Welcome() {
   const [dbExists, setDbExists] = useState(null);
+  const [userTracks, setUserTracks] = useState(null);
   const [matchedTracks, setMatchedTracks] = useState([]);
+  const [festivalData, setFestivalData] = useState(null);
   console.log('test', dbExists);
 
 
+  //on DBexists update, 
+  //TODO: if dbexists, set emtpy festivalsearchBox
   useEffect(() => {
     if (dbExists === true) {
-      getAllTracks((tracks) => {
-       console.log('here are the tracks',tracks)
-       setMatchedTracks(crossReference(tracks, getACLData())) ;
-       console.log('here are matchedTracks after reference', matchedTracks);
-      console.log('Here is the jambase API result');
-      // getJamBaseEvent('Distortion');
-     })
+
+    //   getAllTracks((tracks) => {
+    //    console.log('here are the tracks',tracks)
+    //    setMatchedTracks(crossReference(tracks, getACLData())) ;
+    //    console.log('here are matchedTracks after reference', matchedTracks);
+    //   console.log('Here is the jambase API result');
+    //   // getJamBaseEvent('Distortion');
+    //  })
      }
   },[dbExists])
 
   
 
   
-
+  //check and set if we already have users spotify data
   useEffect(() => {
     checkIndexedDBExists('tracksDatabase')
       .then((exists) => setDbExists(exists))
+      .then(() => {getAllTracks((tracks) => {
+        setUserTracks(tracks);
+      })})
       .catch((error) => {
         console.error(error);
         setDbExists(false);
       })
   }, []);
 
+  //authorize user and redirect to callback
   const fetchData = async () => {
     try {
       const response = await fetch('/.netlify/functions/authorizeUser');
@@ -60,6 +69,30 @@ export default function Welcome() {
     } 
   };
 
+  //start getting all matched data using tracks and festival
+  const initiateMatchedData = (selectedFestival) => {
+    console.log('button clicked from welcome!', selectedFestival)
+    setFestivalData(selectedFestival);
+  }
+
+  //when festivalData changes, initiate data presentation.
+  useEffect(() => {
+    console.log('here is festival data from welcome', festivalData);
+
+    if(festivalData) {
+      if(festivalData.performer) {
+        let festivalArtists = [];
+  
+        festivalData.performer.forEach((performer) => {
+          festivalArtists.push(performer.name);
+        })
+
+        setMatchedTracks(crossReference(userTracks, festivalArtists))
+      }
+    }
+    
+  },[festivalData])
+
   return (
     <>
   <h1>Hello Welcome</h1>
@@ -75,7 +108,8 @@ export default function Welcome() {
           <p key={`${track.id}-${index}`}>Artist: {track.artist.name} Song: {track.name}</p>
         ))
       )}
-    <FestivalSearchBox />
+    <FestivalSearchBox dbExists={dbExists} initiateMatchedData={initiateMatchedData}/>
+    <button onClick={clearDatabase}>clear database</button>
     </>
   ) : (
     <button onClick={fetchData}>click to login</button>

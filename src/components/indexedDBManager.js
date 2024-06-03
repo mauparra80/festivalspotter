@@ -145,4 +145,21 @@ function checkIndexedDBExists(dbName) {
   });
 }
 
-export {filterTrackData, storeDataInIndexedDB, getDataByIndex, getAllTracks, checkIndexedDBExists, getACLData}
+function clearDatabase() {
+  let request = indexedDB.deleteDatabase('tracksDatabase');
+
+  request.onsuccess = function(event) {
+    console.log('Database deleted successfully');
+  };
+
+  request.onerror = function(event) {
+    console.error('Error deleting database:', event.target.errorCode);
+  };
+
+  request.onblocked = function(event) {
+    console.warn('Database deletion blocked');
+  };
+ 
+}
+
+export {filterTrackData, storeDataInIndexedDB, getDataByIndex, getAllTracks, checkIndexedDBExists, getACLData, clearDatabase}
