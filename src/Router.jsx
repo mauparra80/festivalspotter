@@ -2,7 +2,7 @@ import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom";
 import Welcome from "./pages/Welcome/Welcome";
 import Profile from "./pages/Profile/Profile";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
-import Callback from "./components/Callback";
+import Callback from "./pages/Callback";
 
 //create layout to expand for header/footer
 const Layout = () => {

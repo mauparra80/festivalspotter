@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { filterTrackData, storeDataInIndexedDB } from './indexedDBManager';
+import { filterTrackData, storeDataInIndexedDB } from '../components/functions/indexedDBManager/indexedDBManager'
 
 export default function Callback() {
   const location = useLocation();

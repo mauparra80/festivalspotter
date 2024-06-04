@@ -1,45 +1,19 @@
 import React, {useEffect, useState} from "react";
-import { checkIndexedDBExists, getAllTracks, getACLData, clearDatabase } from "../../components/indexedDBManager";
+import { checkIndexedDBExists, getAllTracks, clearDatabase } from "../../components/functions/indexedDBManager/indexedDBManager";
+import { authorizeSpotifyUser } from "../../components/functions/spotifyManager/spotifyAPI";
 import crossReference from "../../components/functions/crossReference";
-import getJamBaseEvent from "../../components/FestivalSearchBox/jamBaseAPI";
 import FestivalSearchBox from "../../components/FestivalSearchBox/FestivalSearchBox";
+import DataPage from "../../components/DataPage/DataPage";
 
-/*
-TODO: 
-1. create spacial layout
-- then create simple festival name
-2. sort matched songs by most popular artist to least popular artist. 
-3. make jambase search by state, call API, get results and then user can search by festival name from that state.
-  -we can get list of the states first, mehh.
- */
+
 
 export default function Welcome() {
   const [dbExists, setDbExists] = useState(null);
   const [userTracks, setUserTracks] = useState(null);
   const [matchedTracks, setMatchedTracks] = useState([]);
   const [festivalData, setFestivalData] = useState(null);
-  console.log('test', dbExists);
-
-
-  //on DBexists update, 
-  //TODO: if dbexists, set emtpy festivalsearchBox
-  useEffect(() => {
-    if (dbExists === true) {
-
-    //   getAllTracks((tracks) => {
-    //    console.log('here are the tracks',tracks)
-    //    setMatchedTracks(crossReference(tracks, getACLData())) ;
-    //    console.log('here are matchedTracks after reference', matchedTracks);
-    //   console.log('Here is the jambase API result');
-    //   // getJamBaseEvent('Distortion');
-    //  })
-     }
-  },[dbExists])
-
   
-
-  
-  //check and set if we already have users spotify data
+  //check and set if we already have users spotify data and setUserTracks
   useEffect(() => {
     checkIndexedDBExists('tracksDatabase')
       .then((exists) => setDbExists(exists))
@@ -52,33 +26,15 @@ export default function Welcome() {
       })
   }, []);
 
-  //authorize user and redirect to callback
-  const fetchData = async () => {
-    try {
-      const response = await fetch('/.netlify/functions/authorizeUser');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log('YEY!! we got the data! ',data);
-      localStorage.setItem('verifier', data.verifier);
-      console.log("verifier", data.verifier);
-      window.location.href = data.redirectUrl; 
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } 
-  };
 
   //start getting all matched data using tracks and festival
   const initiateMatchedData = (selectedFestival) => {
-    console.log('button clicked from welcome!', selectedFestival)
     setFestivalData(selectedFestival);
   }
 
   //when festivalData changes, initiate data presentation.
+  //TODO: create functions to get all dat and update it here.
   useEffect(() => {
-    console.log('here is festival data from welcome', festivalData);
-
     if(festivalData) {
       if(festivalData.performer) {
         let festivalArtists = [];
@@ -112,8 +68,12 @@ export default function Welcome() {
     <button onClick={clearDatabase}>clear database</button>
     </>
   ) : (
-    <button onClick={fetchData}>click to login</button>
+    <button onClick={authorizeSpotifyUser}>click to login</button>
   )}
+
+  {festivalData ? (
+    <DataPage festivalData={festivalData}/>
+  ) : <p>no festival data yet</p>}
 </>
   )
 }

@@ -1,24 +1,5 @@
 //functions to mananage (store and get) data from indexedDB
 
-function getACLData() {
-  return [
-    "Dua Lipa", "Tyler, the Creator", "Chris Stapleton", "Blink-182", "Sturgill Simpson", "Pretty Lights", "Khruangbin", "Leon Bridges", "Carin León", "Norah Jones", "Reneé Rapp", 
-    "Foster The People", "Kehlani", "Teddy Swims", "Benson Boone", "Caamp", "Dominic Fike", "The Marías", "Jungle", "Dom Dolla", "Chappell Roan", "Porter Robinson", "Fletcher", 
-    "Red Clay Strays", "Orville Peck", "Still Woozy", "Vince Staples", "Cannons", "Remi Wolf", "Something Corporate", "Jeezy", "San Holo", "Kevin Abstract", "Stephen Sanchez", 
-    "Elderbrook", "Tyla", "Jess Glynne", "Catfish and The Bottlemen", "Hermanos Gutiérrez", "That Mexican OT", "Barry Can't Swim", "Santigold", "Qveen Herby", "Medium Build", 
-    "Kenny Beats", "The Beaches", "flipturn", "David Shaw", "Movements", "Royel Otis", "wave to earth (웨이브 투 어스)", "Connor Price", "Malcolm Todd", "Flo", "Bakar", "SPINAL", 
-    "Eggy", "Say She She", "MisterWives", "Eyedress", "Elyanna", "Geese", "Grand Funk Railroad", "Mickey Guyton", "Petey", "Dasha", "Mannequin Pussy", "Penny & Sparrow", "Chance Peña", 
-    "Sir Chloe", "Dexter and The Moonrocks", "The Paper Kites", "Glass Beams", "BALTHVS", "Dustin Kensrue", "Valencia Grace", "Lola Young", "Joe P", "Myles Smith", "I Dont Know How But They Found Me (iDKHOW)", 
-    "Jonah Kagen", "JORDY", "Bob Schneider", "Thee Sinseers", "Goldie Boutilier", "Asleep at the Wheel", "Richy Mitch & The Coal Miners", "Katie Pruitt", "Billy Allen", "The Pollies", "Brittany Davis", 
-    "Paco Versailles", "PawPaw Rod", "Nico Vega", "Rett Madison", "WhooKilledKenny", "Tanner Adell", "Emily Nenni", "Emei", "Kalu and the Electric Joint", "The Droptines", "Tyler Halverson", 
-    "Mon Rovîa", "The Criticals", "Braxton Keith", "Sawyer Hill", "Jon Muq", "DAIISTAR", "Rickshaw Billie's Burger Patrol", "The Telescreens", "late night drive home", "Théo Lawrence", "Chief Cleopatra", 
-    "West 22nd", "Chaparelle", "promqueen", "Being Dead", "Midnight Navy", "Cale Tyson", "Godly The Ruler", "Molecular Steve", "The Tiarras", "Zach Person", "Marley Bleu", "Obed Padilla", "Deyaz", 
-    "Amira Elfeky", "The Levites", "The Moriah Sisters", "The Huston-Tillotson University Jazz Collective", "Lucy Kalantari & The Jazz Cats", "Uncle Jumbo", "Q Brothers", "Mister G", "Homescool", 
-    "Miss Tutti And The Fruity Band", "Andrew & Polly", "School of Rock", "The Barton Hills Choir"
-  ]
-}
-
-
 //filter API tracks into wanted data
 function filterTrackData(track) {
   track = track.track;
@@ -162,4 +143,4 @@ function clearDatabase() {
  
 }
 
-export {filterTrackData, storeDataInIndexedDB, getDataByIndex, getAllTracks, checkIndexedDBExists, getACLData, clearDatabase}
+export {filterTrackData, storeDataInIndexedDB, getDataByIndex, getAllTracks, checkIndexedDBExists, clearDatabase}

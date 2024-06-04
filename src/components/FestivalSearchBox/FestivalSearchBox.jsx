@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from "react";
 import states from "./stateData";
 import Select from "react-select";
-import getJamBaseEvent from "./jamBaseAPI";
-import { getAllTracks } from "../indexedDBManager";
-import crossReference from "../functions/crossReference";
-import WordCloudComponent from "../WordCloud/WordCloudComponent";
-import { getWordCloudArtists } from "../WordCloud/getWordCloudArtists";
+import getJamBaseEvent from '../functions/jamBaseManager/jamBaseAPI'
 
 
 export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
@@ -17,10 +13,7 @@ export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
   const [stateFestivals, setStateFestivals] = useState([]);
   const [festivalListIsLoading, setFestivalListIsLoading] = useState(true);
   const [disableFestivalSearch, setDisableFestivalSearch] = useState(true);
-  const [artistWordCountList, setArtistWordCountList] = useState(null);
  
-
-
 
   //set selected State
   const selectState = selectedOption => {
@@ -58,31 +51,10 @@ export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
     }
   }, [selectedState])
 
-  
-  /*
-  continue on this. we just finished the search boxes
-  1. get all tracks with callback
-  2. match selectedFestival with stateFestivals - return festival.
-   */
   const submitSearch = () => {
-    setArtistWordCountList(getWordCloudArtists(selectedFestival));
-
     //call parent function to get all data
     initiateMatchedData(selectedFestival);
   }
-  
-
-    // if (dbExists === true) {
-
-    //     getAllTracks((tracks) => {
-    //      console.log('here are the tracks',tracks)
-    //      setMatchedTracks(crossReference(tracks, getACLData())) ;
-    //      console.log('here are matchedTracks after reference', matchedTracks);
-    //     console.log('Here is the jambase API result');
-    //     // getJamBaseEvent('Distortion');
-    //    })
-    //    }
-  
 
   //on dbExists change, reset search box (might not be used)
   useEffect(() => {
@@ -116,9 +88,6 @@ export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
 
     <button onClick={submitSearch}>Get My Festival Music</button>
 
-    {artistWordCountList ? 
-    <WordCloudComponent words={artistWordCountList} /> :
-    <p>No word cloud</p>}
 
   </>
   );
