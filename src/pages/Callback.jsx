@@ -35,15 +35,17 @@ export default function Callback() {
 
   //when we have token, fetch track data. 
   useEffect(() => {
-
+    console.log("token from useeffect", token);
     async function getTracks() {
       if (token) {
         //get token
         const tracks = await fetchAllSavedTracks(token);
         setTokenUsed(true);
-
+        console.log("tracks from callback",tracks);
+    
         //filter and store tracks
         let filteredTracks = tracks.map(filterTrackData);
+
         storeDataInIndexedDB(filteredTracks);
 
         //go to Main page
@@ -78,19 +80,11 @@ async function fetchAllSavedTracks(token) {
       url = data.next;
     }
     
-    // while (url) {
-    //   const response = await axios.get(url, {
-    //     headers: {
-    //       'Authorization': `Bearer ${token}`,
-    //       'Content-Type': 'application/json'
-    //     }
-    //   });
-    //   tracks.push(...response.data.items);
-    //   url = response.data.next;
-    // }
   } catch (error) {
     console.log("Error fetching tracks: ", error);
     return null;
   } 
+
+  console.log("tracks inside fetchtracks", tracks);
   return tracks;
 }

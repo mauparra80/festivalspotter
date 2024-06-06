@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
-import { checkIndexedDBExists, getAllTracks, clearDatabase } from "../../components/functions/indexedDBManager/indexedDBManager";
+import { getAllTracks, clearDatabase, checkIfDatabaseContainsStores } from "../../components/functions/indexedDBManager/indexedDBManager";
 import { authorizeSpotifyUser } from "../../components/functions/spotifyManager/spotifyAPI";
 import crossReference from "../../components/functions/crossReference";
 import FestivalSearchBox from "../../components/FestivalSearchBox/FestivalSearchBox";
 import DataPage from "../../components/DataPage/DataPage";
+import Login from "../../components/Login/Login";
 
 
 
-export default function Welcome() {
+export default function Home() {
   const [dbExists, setDbExists] = useState(null);
   const [userTracks, setUserTracks] = useState(null);
   const [matchedTracks, setMatchedTracks] = useState([]);
@@ -15,15 +16,23 @@ export default function Welcome() {
   
   //check and set if we already have users spotify data and setUserTracks
   useEffect(() => {
-    checkIndexedDBExists('tracksDatabase')
-      .then((exists) => setDbExists(exists))
-      .then(() => {getAllTracks((tracks) => {
-        setUserTracks(tracks);
-      })})
-      .catch((error) => {
+    async function checkDatabase() {
+      try {
+        const hasStores = await checkIfDatabaseContainsStores('tracksDatabase');
+        console.log('Database has stores:', hasStores);
+        if(hasStores) {
+          setDbExists(hasStores);
+          getAllTracks((tracks) => {
+            setUserTracks(tracks);
+          })
+        } else {
+          setDbExists(false);
+        }
+      } catch (error) {
         console.error(error);
-        setDbExists(false);
-      })
+      }
+    }
+    checkDatabase();
   }, []);
 
 
@@ -51,7 +60,6 @@ export default function Welcome() {
 
   return (
     <>
-  <h1>Hello Welcome</h1>
   {dbExists === null ? (
     <h1>Loading....</h1>
   ) : dbExists ? (
@@ -68,12 +76,12 @@ export default function Welcome() {
     <button onClick={clearDatabase}>clear database</button>
     </>
   ) : (
-    <button onClick={authorizeSpotifyUser}>click to login</button>
+    <>
+    <Login authorizeSpotifyUser={authorizeSpotifyUser}/>
+    </>
   )}
 
-  {festivalData ? (
-    <DataPage festivalData={festivalData}/>
-  ) : <p>no festival data yet</p>}
+  {festivalData && <DataPage festivalData={festivalData}/>}
 </>
   )
 }

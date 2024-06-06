@@ -20,15 +20,21 @@ function filterTrackData(track) {
 
 //store given data
 function storeDataInIndexedDB(data) {
+  console.log("sotredtaIndexDB called");
+
   //open link with current version number
   let request = indexedDB.open('tracksDatabase', 1)
 
   //called everytime db is created or version is updated
   //create db schema
   request.onupgradeneeded = function(event) {
+    console.log("onupgradeneeded triggered")
+
     let db = event.target.result;
 
     let objectStore = db.createObjectStore('tracks', { keyPath: 'trackId' });
+
+    console.log('tracks object store created');
 
     //create indexes for searching (change as needed)
     objectStore.createIndex('trackId', 'trackId', {unique: true})
@@ -38,6 +44,15 @@ function storeDataInIndexedDB(data) {
 
   request.onsuccess = function(event) {
     let db = event.target.result;
+
+    console.log("onsuccess running");
+
+    // Check if the object store exists
+    if (!db.objectStoreNames.contains('tracks')) {
+      console.error('Object store "tracks" not found.');
+      return;
+    }
+
     let transaction = db.transaction(['tracks'], 'readwrite');
     let objectStore = transaction.objectStore('tracks');
 
@@ -98,27 +113,24 @@ function getDataByIndex(indexName, query, callback) {
   };
 }
 
-function checkIndexedDBExists(dbName) {
+function checkIfDatabaseContainsStores(dbName) {
   return new Promise((resolve, reject) => {
     let request = indexedDB.open(dbName);
 
-    //db exists, return true
+    // Handle the onsuccess event to check if the database contains any object stores
     request.onsuccess = function(event) {
       let db = event.target.result;
+      let hasStores = db.objectStoreNames.length > 0;
       db.close();
-      resolve(true);
-    }
-
-    //db does not exist
-    request.onerror = function(event) {
-      if(event.target.error.name === 'NotFoundError') {
-        resolve(false);
-      } else {
-        reject('Error opening database: ' + event.target.error.message);
-      }
+      resolve(hasStores);
     };
 
-    //if database does not exist or if it needs to be upgraded
+    // Handle errors during the database opening process
+    request.onerror = function(event) {
+      reject('Error checking database: ' + event.target.error.message);
+    };
+
+    // If the onupgradeneeded event is called, the database does not contain any stores
     request.onupgradeneeded = function(event) {
       event.target.transaction.abort();
       resolve(false);
@@ -129,7 +141,7 @@ function checkIndexedDBExists(dbName) {
 function clearDatabase() {
   let request = indexedDB.deleteDatabase('tracksDatabase');
 
-  request.onsuccess = function(event) {
+  request.onsuccess = function() {
     console.log('Database deleted successfully');
   };
 
@@ -137,10 +149,10 @@ function clearDatabase() {
     console.error('Error deleting database:', event.target.errorCode);
   };
 
-  request.onblocked = function(event) {
+  request.onblocked = function() {
     console.warn('Database deletion blocked');
   };
  
 }
 
-export {filterTrackData, storeDataInIndexedDB, getDataByIndex, getAllTracks, checkIndexedDBExists, clearDatabase}
+export {filterTrackData, storeDataInIndexedDB, getDataByIndex, getAllTracks, clearDatabase, checkIfDatabaseContainsStores}

@@ -1,6 +1,8 @@
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import wordCloud from 'wordcloud';
+import PropTypes from 'prop-types';
+
 
 const WordCloudComponent = ({words}) => {
   const canvasRef = useRef(null);
@@ -31,4 +33,9 @@ const WordCloudComponent = ({words}) => {
    ></canvas>
 }
 
+WordCloudComponent.propTypes = {
+  words: PropTypes.array,
+}
+
 export default WordCloudComponent
+

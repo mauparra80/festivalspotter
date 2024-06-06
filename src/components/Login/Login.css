@@ -1,0 +1,80 @@
+.login-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  max-width: 2560px;
+
+  background-image: url('../../assets/img/loginBackground.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-container {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--color-gunmetal);
+  border-radius: 20px;;
+  box-shadow: 0px 5px 50px 50px rgba(0, 0, 0, 0.437);
+  width: clamp(400px, 100%, 1200px);
+  margin: 30px;
+
+  background-color: var(--color-lightTan);
+  border: 10px solid var(--color-gunmetal)
+}
+
+.login {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 200px; 
+  padding: 20px;
+}
+
+.intro {
+  flex: 1 1 45%;
+  min-width: 200px; 
+  min-height: 200px;
+  padding: 20px;
+  background-color: var(--color-lightTan);
+  border-radius: 10px;
+}
+
+.spotify-button {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+
+  width: clamp(200px, 100%, 300px);
+  background-color: var(--color-spotify-green);
+}
+
+.component-slider {
+  max-width: 600px;
+  width: 100%;
+  height: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+
+  background-color: var(--color-gunmetal);
+}
+
+.intro-slide-img {
+  object-fit: cover;
+  width: 100%;
+  
+  display: block;
+}
