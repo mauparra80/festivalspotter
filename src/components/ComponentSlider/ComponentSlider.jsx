@@ -3,10 +3,11 @@ import React, {useState} from "react";
 import {ArrowBigLeft, ArrowBigRight, Key} from "lucide-react"
 import './componentSlider.css'
 
-export default function ComponentSlider({components}) {
-  const [componentIndex, setComponentIndex] = useState(0);
+export default function ComponentSlider({components, indexPreset}) {
+  const [componentIndex, setComponentIndex] = useState(indexPreset);
 
   console.log("component", components)
+  console.log('index', indexPreset);
 
   function showNextComponent() {
     setComponentIndex(index => {

@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import states from "./stateData";
 import Select from "react-select";
 import getJamBaseEvent from '../functions/jamBaseManager/jamBaseAPI'
+import './festivalSearchBox.css'
+import { AppContext } from "../AppProvider";
 
 
-export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
+export default function FestivalSearchBox({dbExists}) {
   //[{stateGeoInfo,...}]
   const [selectedState, setSelectedState] = useState(null); 
   //{festivalData}
@@ -13,6 +15,8 @@ export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
   const [stateFestivals, setStateFestivals] = useState([]);
   const [festivalListIsLoading, setFestivalListIsLoading] = useState(true);
   const [disableFestivalSearch, setDisableFestivalSearch] = useState(true);
+
+  const {setFestivalData} = useContext(AppContext);
  
 
   //set selected State
@@ -52,8 +56,7 @@ export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
   }, [selectedState])
 
   const submitSearch = () => {
-    //call parent function to get all data
-    initiateMatchedData(selectedFestival);
+    setFestivalData(selectedFestival);
   }
 
   //on dbExists change, reset search box (might not be used)
@@ -65,28 +68,30 @@ export default function FestivalSearchBox({dbExists, initiateMatchedData}) {
 
   return (
   <>
+    <h1 className="font-poetsen text-customGunmetal">Select an Upcoming Festival</h1>
+    <div className="dropDown-container">
+      <Select
+        options={states}
+        getOptionLabel={option => `${option.label} (${option.abbreviation})`}
+        getOptionValue={option => option.value}
+        filterOption={customFilter}
+        onChange={selectState}
+        placeholder="Search for a state..."
+      />
+      <Select
+      options={stateFestivals ? createFestivalSearchData(stateFestivals) : ''}
+      placeholder={(disableFestivalSearch ? "Select state first" : "Search for festival...")}
+      isLoading={festivalListIsLoading}
+      isSearchable={true}
+      isClearable={true}
+      value={selectedFestival ? { value: selectedFestival.identifier, label: selectedFestival.name } : null}
+      onChange={selectFestival}
+      isDisabled={disableFestivalSearch}
+      />
+    </div>
 
-    <Select
-      options={states}
-      getOptionLabel={option => `${option.label} (${option.abbreviation})`}
-      getOptionValue={option => option.value}
-      filterOption={customFilter}
-      onChange={selectState}
-      placeholder="Search for a state..."
-    />
-
-    <Select
-    options={stateFestivals ? createFestivalSearchData(stateFestivals) : ''}
-    placeholder={(disableFestivalSearch ? "Select state first" : "Search for festival...")}
-    isLoading={festivalListIsLoading}
-    isSearchable={true}
-    isClearable={true}
-    value={selectedFestival ? { value: selectedFestival.identifier, label: selectedFestival.name } : null}
-    onChange={selectFestival}
-    isDisabled={disableFestivalSearch}
-    />
-
-    <button onClick={submitSearch}>Get My Festival Music</button>
+    <button className="bg-customGunmetal" onClick={submitSearch}>Get My Festival Music</button>
+    
 
 
   </>

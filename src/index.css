@@ -6,6 +6,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
+  transition: height 1s;
 }
 
 :root {
@@ -65,7 +67,9 @@ body {
   place-items: center;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow-x: hidden;
+
+  
 }
 
 h1 {
@@ -90,4 +94,32 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 2560px;
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--color-gunmetal);
+  border-radius: 20px;;
+  box-shadow: 0px 5px 50px 50px rgba(0, 0, 0, 0.437);
+  max-width: 1200px;
+  width: 90%;
+  margin: 50px;
+  background-color: var(--color-lightTan);
+  border: 10px solid var(--color-gunmetal)
 }
