@@ -14,8 +14,9 @@ const SLIDES = [
   <IntroSlide step={"Step 3"} description={"See what artists you know that will be at that festival and more!"} img={introImgResults} key={3} />,
 ]
 
-export default function ActionPage({userData}) {
+export default function ActionPage({dbExists}) {
 
+  console.log("dbExists is ",dbExists);
 
   return (
     <>
@@ -23,14 +24,14 @@ export default function ActionPage({userData}) {
         <div className="action-container">
           <div className="intro">
             <div className='component-slider'>
-              <ComponentSlider components={SLIDES} indexPreset={userData ? 0 : 1}/>
+              <ComponentSlider components={SLIDES} indexPreset={dbExists ? 1 : 0}/>
             </div>
           </div>
 
           <div className="action">
-          {userData ? (
-              <Login /> ) : (
-              <FestivalSearchBox /> )
+          {dbExists ? (
+              <FestivalSearchBox /> ) : (
+                <Login /> )
           }
           </div>
         </div>

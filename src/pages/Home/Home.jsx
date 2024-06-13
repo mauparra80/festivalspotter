@@ -59,7 +59,7 @@ export default function Home() {
   return (
   <>
     {festivalData ? <DataPage festivalData={festivalData} matchedTracks={matchedTracks}/> : 
-    <ActionPage  userTracks={userTracks} />}
+    <ActionPage  dbExists={dbExists} />}
   </>
   )
 }

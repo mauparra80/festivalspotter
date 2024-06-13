@@ -4,6 +4,7 @@ import Select from "react-select";
 import getJamBaseEvent from '../functions/jamBaseManager/jamBaseAPI'
 import './festivalSearchBox.css'
 import { AppContext } from "../AppProvider";
+import { clearDatabase } from "../functions/indexedDBManager/indexedDBManager";
 
 
 export default function FestivalSearchBox({dbExists}) {
@@ -90,7 +91,9 @@ export default function FestivalSearchBox({dbExists}) {
       />
     </div>
 
-    <button className="bg-customGunmetal" onClick={submitSearch}>Get My Festival Music</button>
+    <button className="bg-customGunmetal text-lg" onClick={submitSearch}>Get My Festival Music</button>
+
+    <button className="bg-customTan border-gray-400 border-2 text-gray-500 text-sm" onClick={clearDatabase}>Refresh My Spotify Music</button>
     
 
 
