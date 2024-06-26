@@ -13,7 +13,10 @@ export default function Callback() {
     const params = new URLSearchParams(location.search);
     console.log(params);
     const code = params.get('code');
-    const verifier = localStorage.getItem('verifier');
+    let verifier = localStorage.getItem('verifier');
+    if (!verifier) {
+      verifier = sessionStorage.getItem('verifier');
+    }
     console.log(code);
     console.log(verifier);
     // const verifier = localStorage.getItem('verifier'); 
