@@ -12,7 +12,7 @@ publish = "dist"
 publishOrigin = "ui"
 command = "npm run build"
 commandOrigin = "ui"
-functions = .netlify/functions"
+functions = ".netlify/functions"
 
 [build.environment]
 
