@@ -1,5 +1,5 @@
 plugins = []
-functionsDirectory = "spotify-app-setup/.netlify/functions"
+functionsDirectory = ".netlify/functions"
 functionsDirectoryOrigin = "config-v1"
 headers = []
 
@@ -8,11 +8,11 @@ headers = []
 [functions."*"]
 
 [build]
-publish = "spotify-app-setup/dist"
+publish = "dist"
 publishOrigin = "ui"
 command = "npm run build"
 commandOrigin = "ui"
-functions = spotify-app-setup/.netlify/functions"
+functions = .netlify/functions"
 
 [build.environment]
 
