@@ -8,11 +8,11 @@ headers = []
 [functions."*"]
 
 [build]
-publish = "dist"
+publish = "spotify-app-setup/dist"
 publishOrigin = "ui"
 command = "npm run build"
 commandOrigin = "ui"
-functions = ".netlify/functions"
+functions = spotify-app-setup/.netlify/functions"
 
 [build.environment]
 
