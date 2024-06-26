@@ -12,8 +12,13 @@ const authorizeSpotifyUser = async () => {
     }
     const data = await response.json();
     console.log('YEY!! we got the data! ',data);
-    localStorage.setItem('verifier', data.verifier);
-    sessionStorage.setItem('verifier', data.verifier);
+    try {
+      localStorage.setItem('verifier', data.verifier);
+      sessionStorage.setItem('verifier', data.verifier); // Also store in sessionStorage
+      console.log("Verifier stored in localStorage and sessionStorage:", data.verifier);
+    } catch (storageError) {
+      console.error('Error storing verifier in localStorage or sessionStorage:', storageError);
+    }
     console.log("verifier", data.verifier);
     setTimeout(() => {
       window.location.href = data.redirectUrl;
