@@ -10,7 +10,7 @@ headers = []
 [build]
   publish = "dist"
   publishOrigin = "ui"
-  command = "npm run build"
+  command = "npx vite build && shx cp _redirects dist/"
   commandOrigin = "ui"
   functions = ".netlify/functions"
 
