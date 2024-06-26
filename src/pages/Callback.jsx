@@ -22,6 +22,7 @@ export default function Callback() {
     // const verifier = localStorage.getItem('verifier'); 
 
     if (code && verifier && !tokenUsed) {
+      console.log("calling getToken now");
       fetch(`/.netlify/functions/getToken?code=${code}&verifier=${verifier}`)
         .then(response => response.json())
         .then(data => {

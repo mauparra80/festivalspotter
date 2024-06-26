@@ -5,6 +5,7 @@ import fetch from "node-fetch";
 
 export const handler = async function(event,context) {
   //get code and verifier from the event query
+  console.log("we are in getToken function now");
   console.log('this is the event passed into getTokensAPI', event);
   const code = new URLSearchParams(event.queryStringParameters).get('code');
   const verifier = new URLSearchParams(event.queryStringParameters).get('verifier');
