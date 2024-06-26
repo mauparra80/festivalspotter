@@ -8,39 +8,31 @@ headers = []
 [functions."*"]
 
 [build]
-  publish = "dist"
-  publishOrigin = "ui"
-  command = "npx vite build && shx cp _redirects dist/"
-  commandOrigin = "ui"
-  functions = ".netlify/functions"
+publish = "dist"
+publishOrigin = "ui"
+command = "npm run build"
+commandOrigin = "ui"
+functions = ".netlify/functions"
 
 [build.environment]
-  NODE_ENV = "production"
 
 [build.processing]
-  skip_processing = false
 
 [build.processing.css]
-  bundle = true
-  minify = true
 
 [build.processing.html]
-  pretty_urls = true
 
 [build.processing.images]
-  compress = true
 
 [build.processing.js]
-  bundle = true
-  minify = true
 
 [build.services]
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
 
 [redirects.query]
 
