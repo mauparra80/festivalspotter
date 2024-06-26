@@ -15,6 +15,8 @@ export default function Home() {
   const [matchedTracks, setMatchedTracks] = useState([]);
   // const [festivalData, setFestivalData] = useState(null);
 
+  
+
   const {festivalData} = useContext(AppContext);
   
   //check and set if we already have users spotify data and setUserTracks
