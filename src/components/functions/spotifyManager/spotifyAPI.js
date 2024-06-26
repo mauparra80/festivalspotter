@@ -20,9 +20,6 @@ const authorizeSpotifyUser = async () => {
       console.error('Error storing verifier in localStorage or sessionStorage:', storageError);
     }
     console.log("verifier", data.verifier);
-    setTimeout(() => {
-      window.location.href = data.redirectUrl;
-    }, 10000); // Adding a small delay to ensure localStorage operation completes
     window.location.href = data.redirectUrl; 
   } catch (error) {
     console.error('Error fetching data:', error);
