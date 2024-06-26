@@ -13,6 +13,7 @@ const authorizeSpotifyUser = async () => {
     const data = await response.json();
     console.log('YEY!! we got the data! ',data);
     localStorage.setItem('verifier', data.verifier);
+    localStorage.getItem('verifier');
     console.log("verifier", data.verifier);
     setTimeout(() => {
       window.location.href = data.redirectUrl;
