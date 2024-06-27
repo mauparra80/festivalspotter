@@ -71,8 +71,8 @@ export const handler = async function(event, context) {
       }),
     };
   } catch (error) {
-    console.error("Error exchanging code for token: ", error.message);
-    console.error("Error exchanging code for token: ", error);
+    console.log("Error exchanging code for token: ", error.message);
+    console.log("Error exchanging code for token: ", error);
     console.error("Error exchanging code for token: ", error.response.data);
     return {
       statusCode: 500,
