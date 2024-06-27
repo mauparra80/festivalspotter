@@ -15,7 +15,7 @@ export const handler = async function(event, context) {
 
   const redirect_Uri = `${process.env.URL}/callback`;
   const clientId = process.env.SPOTIFY_CLIENT_ID;
-  // const clientSecret = process.env.SPOTIFY_CLIENT_SECRET; 
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET; 
   console.log("Redirect_Uri: ",redirect_Uri);
   console.log("clinetId: ", clientId);
 
@@ -25,13 +25,15 @@ export const handler = async function(event, context) {
   params.append('code', code);
   params.append('redirect_uri', redirect_Uri);
   params.append('code_verifier', verifier);
-  params.append('client_id', clientId);
+  // params.append('client_id', clientId);
 
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')
   };
 
-  console.log("params", params);
+  console.log("params", params.toString());
+  console.log("headers", headers)
 
   try {
     const response = await axios.post(tokenUrl, params.toString(), { headers });
