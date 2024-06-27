@@ -7,6 +7,7 @@ export default function Callback() {
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
   const [tokenUsed, setTokenUsed] = useState(false);
+  const [repeatToken, setRepeatToken] = useState(0);
   
   //exchange code for token when we load. 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function Callback() {
           console.error('Error:', error);
         });
     }
-  }, [location]);
+  }, [location, repeatToken]);
 
   //when we have token, fetch track data. 
   useEffect(() => {
@@ -63,6 +64,7 @@ export default function Callback() {
   return (
     <div>
       <h1>Loading</h1>
+      <button onClick={() => setRepeatToken((prev) => prev++)}>{repeatToken}</button>
     </div>
   );
 }
