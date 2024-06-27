@@ -8,6 +8,11 @@ export default function Callback() {
   const [token, setToken] = useState(null);
   const [tokenUsed, setTokenUsed] = useState(false);
   const [repeatToken, setRepeatToken] = useState(0);
+
+  const addCounter = () => {
+    setRepeatToken((prev) => prev++)
+    console.log("button clicked", repeatToken);
+  }
   
   //exchange code for token when we load. 
   useEffect(() => {
@@ -29,6 +34,7 @@ export default function Callback() {
         .then(data => {
           // Handle tokens (save to state, local storage, etc.)
           console.log(data);
+          console.log("data.token", data.access_token);
           sessionStorage.setItem('token', data.access_token)
           setToken(data.access_token);
         })
@@ -64,7 +70,7 @@ export default function Callback() {
   return (
     <div>
       <h1>Loading</h1>
-      <button onClick={() => setRepeatToken((prev) => prev++)}>{repeatToken}</button>
+      <button onClick={() => addCounter()}>{repeatToken}</button>
     </div>
   );
 }
