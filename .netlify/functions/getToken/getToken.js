@@ -3,7 +3,7 @@
 //exchange code for token
 import fetch from "node-fetch";
 
-export const handler = async function(event,context) {
+export const handler = async function(event, context) {
 
   return {
     statusCode: 200,
