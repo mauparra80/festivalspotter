@@ -10,7 +10,7 @@ export default function Callback() {
   const [repeatToken, setRepeatToken] = useState(0);
 
   const addCounter = () => {
-    setRepeatToken((prev) => {prev += 1})
+    setRepeatToken(repeatToken + 1);
     console.log("button clicked", repeatToken);
   }
   
