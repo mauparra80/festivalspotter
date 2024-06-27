@@ -1,12 +1,15 @@
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 
-import https from 'https';
-import querystring from 'querystring';
+//exchange code for token
+// import fetch from "node-fetch";
+import axios from "axios";
 
 export const handler = async function(event, context) {
-  console.log("we are in getToken function now");
-  console.log('this is the event passed into getTokensAPI', event);
 
+
+  //get code and verifier from the event query
+  console.log("we are in getToken function now");
+  // console.log('this is the event passed into getTokensAPI', event);
   const code = new URLSearchParams(event.queryStringParameters).get('code');
   const verifier = new URLSearchParams(event.queryStringParameters).get('verifier');
 
@@ -18,86 +21,63 @@ export const handler = async function(event, context) {
     };
   }
 
-  const redirectUri = `${process.env.URL}/callback`;
+  const redirect_Uri = `${process.env.URL}/callback`;
   const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET; 
+  console.log("Redirect_Uri: ",redirect_Uri);
+  console.log("clinetId: ", clientId);
+  console.log("clientSecret", clientSecret);
 
   const tokenUrl = 'https://accounts.spotify.com/api/token';
-  const params = querystring.stringify({
-    grant_type: 'authorization_code',
-    code: code,
-    redirect_uri: redirectUri,
-    code_verifier: verifier,
-    client_id: clientId,
-  });
+  const params = new URLSearchParams();
+  params.append('grant_type', 'authorization_code');
+  params.append('code', code);
+  params.append('redirect_uri', redirect_Uri);
+  params.append('code_verifier', verifier);
+  // params.append('client_id', clientId);
 
-  const authHeader = 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64');
-  const options = {
-    hostname: 'accounts.spotify.com',
-    path: '/api/token',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': authHeader,
-    },
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')
   };
 
-  console.log("Params:", params);
-  console.log("Headers:", options.headers);
+  console.log("params", params.toString());
+  console.log("headers", headers)
 
-  return new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
-      let data = '';
+  try {
+    const response = await axios.post(tokenUrl, params.toString(), { headers });
+    console.log('Response status:', response.status);
+    console.log('Response data:', response.data);
+    // const response = await fetch(tokenUrl, {
+    //   method: 'POST',
+    //   headers,
+    //   body: params.toString(),
+    // });
+    if (response.status !== 200) {
+      throw new Error('HTTP error! status: ', response.status);
+    }
 
-      res.on('data', (chunk) => {
-        data += chunk;
-      });
+    const data = response.data;
+    if(data.error) {
+      throw new Error(`API error: ${data.error} - ${data.error_description}`);
+    }
 
-      res.on('end', () => {
-        if (res.statusCode !== 200) {
-          console.error(`HTTP error! status: ${res.statusCode}`);
-          return reject({
-            statusCode: 500,
-            body: JSON.stringify({ error: "Failed to exchange code for token", details: `HTTP error! status: ${res.statusCode}` }),
-          });
-        }
-
-        try {
-          const responseData = JSON.parse(data);
-          if (responseData.error) {
-            console.error(`API error: ${responseData.error} - ${responseData.error_description}`);
-            return reject({
-              statusCode: 500,
-              body: JSON.stringify({ error: "Failed to exchange code for token", details: `API error: ${responseData.error} - ${responseData.error_description}` }),
-            });
-          }
-
-          resolve({
-            statusCode: 200,
-            body: JSON.stringify({
-              access_token: responseData.access_token,
-              refresh_token: responseData.refresh_token,
-            }),
-          });
-        } catch (e) {
-          console.error(`Invalid JSON response: ${data}`);
-          return reject({
-            statusCode: 500,
-            body: JSON.stringify({ error: "Failed to exchange code for token", details: "Invalid JSON response from server" }),
-          });
-        }
-      });
-    });
-
-    req.on('error', (e) => {
-      console.error(`Problem with request: ${e.message}`);
-      reject({
-        statusCode: 500,
-        body: JSON.stringify({ error: "Failed to exchange code for token", details: e.message }),
-      });
-    });
-
-    req.write(params);
-    req.end();
-  });
+    //Redirect back to frontend with token
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        access_token: data.access_token,
+        refresh_token: data.refresh_token
+      }),
+    };
+  } catch (error) {
+    console.error("Error exchanging code for token: ", error.message);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({error: "Failed to exchanged code for oken", details: error.message}),
+    };
+  }
 };
+
+
+
