@@ -4,6 +4,7 @@ functionsDirectoryOrigin = "config-v1"
 headers = []
 
 [functions]
+node_bundler = "esbuild"
 
 [functions."*"]
 
