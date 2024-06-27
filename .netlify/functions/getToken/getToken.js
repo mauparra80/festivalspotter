@@ -1,7 +1,7 @@
 // Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
 
 //exchange code for token
-import fetch from "node-fetch";
+// import fetch from "node-fetch";
 
 export const handler = async function(event, context) {
 
