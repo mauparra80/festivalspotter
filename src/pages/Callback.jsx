@@ -43,6 +43,7 @@ export default function Callback() {
     async function getTracks() {
       if (token) {
         //get token
+        console.log("token exists so fetching all saved tracks now");
         const tracks = await fetchAllSavedTracks(token);
         setTokenUsed(true);
         console.log("tracks from callback",tracks);
@@ -71,18 +72,28 @@ async function fetchAllSavedTracks(token) {
   const tracks = [];
 
   try {
-    while (url) {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      tracks.push(...data.items);
-      url = data.next;
-    }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    tracks.push(...data.items);
+
+    // while (url) {
+    //   const response = await fetch(url, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Authorization': `Bearer ${token}`,
+    //       'Content-Type': 'application/json'
+    //     }
+    //   });
+    //   const data = await response.json();
+    //   tracks.push(...data.items);
+    //   url = data.next;
+    // }
     
   } catch (error) {
     console.log("Error fetching tracks: ", error);
