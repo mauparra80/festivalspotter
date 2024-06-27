@@ -5,6 +5,8 @@ headers = []
 
 [functions]
 node_bundler = "esbuild"
+included_files = ["netlify/functions/getToken.js"]
+timeout = 26
 
 [functions."*"]
 
