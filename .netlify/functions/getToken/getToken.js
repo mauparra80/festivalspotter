@@ -9,13 +9,15 @@ export const handler = async function(event, context) {
 
   //get code and verifier from the event query
   console.log("we are in getToken function now");
-  console.log('this is the event passed into getTokensAPI', event);
+  // console.log('this is the event passed into getTokensAPI', event);
   const code = new URLSearchParams(event.queryStringParameters).get('code');
   const verifier = new URLSearchParams(event.queryStringParameters).get('verifier');
 
   const redirect_Uri = `${process.env.URL}/callback`;
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   // const clientSecret = process.env.SPOTIFY_CLIENT_SECRET; 
+  console.log("Redirect_Uri: ",redirect_Uri);
+  console.log("clinetId: ", clientId);
 
   const tokenUrl = 'https://accounts.spotify.com/api/token';
   const params = new URLSearchParams();
@@ -29,9 +31,17 @@ export const handler = async function(event, context) {
     'Content-Type': 'application/x-www-form-urlencoded',
   };
 
+  console.log("params", params);
+
   try {
     const response = await axios.post(tokenUrl, params.toString(), { headers });
-
+    console.log('Response status:', response.status);
+    console.log('Response data:', response.data);
+    // const response = await fetch(tokenUrl, {
+    //   method: 'POST',
+    //   headers,
+    //   body: params.toString(),
+    // });
     if (response.status !== 200) {
       throw new Error('HTTP error! status: ', response.status);
     }
