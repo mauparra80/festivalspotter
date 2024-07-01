@@ -46,11 +46,12 @@ export default function DataPage({festivalData, matchedTracks}) {
           </div>
         </div>
 
+        <h1 className="font-poetsen mb-10 mt-48 text-center">What artists will be there?</h1>
         {artistWordCountList && <WordCloudComponent words={artistWordCountList} />}
         
-
+        <h1 className="font-poetsen mt-64 text-center">What artists will you recognize?</h1>
         <div className="artists-tracks-container">
-        {matchedTracks && <ArtistTracksBox tracks={matchedTracks}/>}
+        {matchedTracks && <ArtistTracksBox tracks={matchedTracks} festivalData={festivalData}/>}
       </div>
 
 

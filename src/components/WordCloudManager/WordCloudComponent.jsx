@@ -14,12 +14,14 @@ const WordCloudComponent = ({words}) => {
     weightFactor: 10,
   });
 
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      setScreenWidth(screen.width);
-      console.log(screen.width);
-    })
-  })
+  //TODO: see if this needs fixing.
+
+  // useEffect(() => {
+  //   window.addEventListener('resize', () => {
+  //     setScreenWidth(screen.width);
+  //     console.log(screen.width);
+  //   })
+  // })
 
   console.log('how many words? ', words)
 
@@ -58,11 +60,15 @@ const WordCloudComponent = ({words}) => {
         weightFactor: 10,
       }))
     }
+
+    
   },[screenWidth, words])
 
   
 
   useEffect(() => {
+    console.log("wordcloud width: ", options.width);
+    console.log("wordcloud height: ", options.height);
     if (canvasRef.current && words.length > 0) {
       const wordList = words.map(word => [word.name, word.count]);
 
@@ -83,7 +89,7 @@ const WordCloudComponent = ({words}) => {
         shrinkToFit: true,
       });
     }
-  }, [screenWidth, words]);
+  }, [words, options]);
 
   return <canvas
    ref={canvasRef}

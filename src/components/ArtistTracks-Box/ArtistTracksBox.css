@@ -2,51 +2,118 @@
 .artist-box-container {
   text-align: center;
   width: 90%;
-  max-width: 600px;
-  min-width: 200px;
+  /* max-width: 600px;
+  min-width: 200px; */
+  max-width: 1000px;
   position: relative;
-  color: var(--color-gunmetal);
+  color: var(--color-Tan);
 }
+
+/* .artist-box-container.left {
+  align-self: flex-start;
+}
+.artist-box-container.right {
+  align-self: flex-end;
+
+  .artist-box{
+    flex-direction: row-reverse;
+  }
+} */
 
 .open-songs-arrow {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
+  transition: .2s ease-in-out;
 }
 
 .artist-box {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px; 
+
   padding: 20px;
   padding-bottom: 25px;
   width: 100%;
   z-index: 2;
   border-radius: 5px;
-  background-color: var(--color-Tan);
+  border: 2px solid color-mix(in srgb, var(--color-Tan) 50%, rgba(255, 255, 255, 0) 50%);
 
+  img {
+    max-width: 500px;
+    justify-self: center;
+    align-self: center;
+  }
+
+  
+
+  h1 {
+    flex-grow: 1;
+  }
+}
+
+.artist-image {
+  flex-grow: 0;
+  box-shadow: 2px 2px 10px 2px color-mix(in srgb, var(--color-Tan) 50%, rgba(255, 255, 255, 0) 50%);
+  transition: .2s ease-in-out;
+}
+
+.spotify-link {
+  flex-shrink: 2;
+  display: flex;
+  gap: 10px;
+  color: var(--color-Tan);
+}
+.spotify-link:hover{
+  cursor: pointer;
+}
+.spotify-link:hover .spotify-icon{
+  transform: rotate(360deg) scale(1.1);
+  transition: .3s ease-in-out;
+}
+
+.spotify-icon {
+  width: 50px;
+  transition: .2s ease-in-out;
 }
 
 .artist-box:hover .open-songs-arrow {
-  background-color: rgba(53, 53, 53, 0.077);
+  background-color: rgba(180, 180, 180, 0.077);
+  transform: translateY(30px);
+  height: 30px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.artist-box:hover .artist-image {
+  transform: scale(1.05);
+}
+.artist-box:hover {
+  cursor: pointer;
 }
 
 .songs-box {
   /* visibility: hidden; */
   /* position: absolute; */
-  left:0;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  /* visibility: hidden; */
   padding: 0;
   width: 100%;
-  max-height: 0;
+  max-height: 0px;
   z-index: 0;
-  background-color: var(--color-Tan);
+  overflow: hidden;
+  /* background-color: var(--color-Tan); */
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: 1.2rem;
 
-  /* transform: translateY(-50%); */
+  /* transform: translateY(-100%); */
   transition: 0.3s ease-in;
   pointer-events: none;
 }
@@ -59,17 +126,77 @@
 .songs-box.show {
   position: static;
   visibility: visible;
-  /* transform:translateY(0); */
+  transform:translateY(0);
   max-height: 400px;
   padding: 20px;
-  pointer-events: auto;;
+  pointer-events: auto;
+}
+
+.track-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  max-width: 800px;
+}
+
+.track-spotify-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 1; /* Allow shrinking */
+  min-width: 0; /* Allows the element to shrink beyond its content size */
+  overflow: hidden;
+}
+
+.track-container audio{
+  flex-shrink: 0;
 }
 
 
-/* .artist-box-container:hover .songs-box {
-  visibility: visible;
-  transform:translateY(0);
-  opacity: 1;
-  transition-delay: 0s;
-  pointer-events: auto;;
-} */
+.icon-small {
+  width: 30px;
+}
+
+.track-line {
+  flex-grow: 2;
+  border-bottom: 1px solid white;
+  margin-left: 10px;
+}
+
+.track-name-container {
+  height: 30px;
+  overflow: hidden;
+  line-height: 30px;
+  flex-shrink: 1;
+  min-width: 0px;
+  width: 100%;
+}
+
+.track-name {
+  display: inline-block;
+  white-space: nowrap;
+  /* overflow: hidden; */
+  min-width: 0px;
+  width: 100%;
+}
+
+.scroll {
+  animation: scroll 10s linear infinite;
+}
+
+
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(calc(var(--scroll-distance) * -1.5));}
+  100% { transform: translateX(0);}
+}
+
+@media only screen and (max-width: 1000px) {
+  .artist-box {
+    flex-wrap: wrap;
+  }
+
+  .track-container audio {
+    width: 100px;
+  }
+}
