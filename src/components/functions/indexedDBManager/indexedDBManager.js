@@ -2,11 +2,11 @@
 
 //filter API tracks into wanted data
 function filterTrackData(track) {
-  track = track.track;
+  console.log("track from filter: ", track);
   return {
     trackId: track.id,
     name: track.name,
-    album: track.album.name,
+    // album: track.album.name,
     artist: {
       name: track.artists[0].name,
       id: track.artists[0].id,
@@ -14,13 +14,13 @@ function filterTrackData(track) {
     },
     link: track.external_urls.spotify,
     preview: track.preview_url,
-    img: track.album.images[2]
+    // img: track.album.images[2]
   }
 }
 
 //store given data
 function storeDataInIndexedDB(data) {
-  console.log("sotredtaIndexDB called");
+  console.log("storeDatainIndexDB called");
 
   //open link with current version number
   let request = indexedDB.open('tracksDatabase', 1)
@@ -57,7 +57,9 @@ function storeDataInIndexedDB(data) {
     let objectStore = transaction.objectStore('tracks');
 
     //add each track in to db
+    console.log("stroring tracks now");
     data.forEach((track) => {
+      console.log("Storing Track: ", track);
       objectStore.add(track);
     });
 

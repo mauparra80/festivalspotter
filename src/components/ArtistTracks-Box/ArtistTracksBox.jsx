@@ -28,7 +28,7 @@ const combineArtistRepeats = (tracks, festivalData) => {
       //artist is not in list so add new artist
 
       //find artist in festivalData and extract img
-      const festivalPerformer = festivalData.performer.find(p => p.name === track.artist.name);
+      const festivalPerformer = festivalData.performer.find(p => p.name.toLowerCase() === track.artist.name.toLowerCase());
 
       combinedArtistSongs.push({
         artist: {
