@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { filterTrackData, storeDataInIndexedDB } from '../components/functions/indexedDBManager/indexedDBManager'
+
 
 export default function Callback() {
   const location = useLocation();
@@ -46,33 +46,11 @@ export default function Callback() {
 
   //when we have token, fetch track data. 
   useEffect(() => {
-    console.log("token from useeffect", token);
-    async function getTracks() {
-      if (token) {
-        //get token
-        console.log("token exists so fetching all saved tracks now");
-        const tracks = await fetchAllSavedTracks(token);
-        const allAlbumTracks = await fetchAllAlbumTracks(token);
-        const allPlaylistTracks = await fetchAllPlaylistTracks(token);
-        console.log("Playlist Tracks: ", allPlaylistTracks);
-        console.log("album tracks: ", allAlbumTracks);
-        tracks.push(...allPlaylistTracks);
-        tracks.push(...allAlbumTracks)
-        const uniqueTracks = removeDuplicates(tracks);
-
-        setTokenUsed(true);
-        console.log("tracks from callback",uniqueTracks);
-    
-        //filter and store tracks
-        let filteredTracks = uniqueTracks.map(filterTrackData);
-
-        storeDataInIndexedDB(filteredTracks);
-
-        //go to Main page
-        navigate('/');
-      }
+    if (token) {
+      setTokenUsed(true);
+      console.log("routing to loading screen now. token from useeffect", token);
+      navigate('/loading-songs', {state: { token }});
     }
-    getTracks();
   }, [token])
 
   return (
@@ -83,145 +61,4 @@ export default function Callback() {
   );
 }
 
-async function fetchAllSavedTracks(token) {
-  let url = "https://api.spotify.com/v1/me/tracks?limit=50";
-  const tracks = [];
 
-  try {
-    // const response = await fetch(url, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Authorization': `Bearer ${token}`,
-    //     'Content-Type': 'application/json'
-    //   }
-    // });
-    // const data = await response.json();
-    // tracks.push(...data.items);
-
-    while (url) {
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await response.json();
-      tracks.push(...data.items);
-      url = data.next;
-    }
-    
-  } catch (error) {
-    console.log("Error fetching tracks: ", error);
-    return null;
-  } 
-
-  console.log("tracks inside fetchtracks", tracks);
-  return formatTracks(tracks);
-}
-
-async function fetchAllAlbumTracks(token) {
-  let url = "https://api.spotify.com/v1/me/albums?limit=50"
-  let albumTracks = []
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await response.json();
-    data.items.forEach((album) => {
-      albumTracks.push(...album.album.tracks.items);
-    })
-
-  } catch (error) {
-    console.error("Error fetching tracks: ", error);
-  }
-
-  console.log("the album tracks are: ", albumTracks);
-  return albumTracks;
-}
-
-async function fetchAllPlaylistTracks(token) {
-  let url = "https://api.spotify.com/v1/me/playlists?limit=50"
-  let allPlaylistTracks = []
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await response.json();
-
-    for (const playlist of data.items) {
-      // playlistTracks.push(...data.album.tracks.items);
-      if(playlist.tracks) {
-        const playListTracks = await fetchPlaylistTracks(token, playlist);
-        allPlaylistTracks.push(...playListTracks);
-      }
-    }
-
-  } catch (error) {
-    console.error("Error fetching tracks: ", error);
-  }
-
-  return formatTracks(allPlaylistTracks);
-}
-
-async function fetchPlaylistTracks(token, playlist) {
-  let url = playlist.tracks.href
-  let playlistTracks = []
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await response.json();
-    playlistTracks = data.items;
-
-  } catch (error) {
-    console.error("Error fetching Individual Playlist tracks: ", error);
-  }
-
-  return playlistTracks;
-}
-
-const formatTracks = (tracks) => {
-  console.log("unformatted tracks:", tracks);
-
-  const formattedTracks = tracks.map(track => {
-    if (track.track) {
-      return track.track
-    }
-  })
-  console.log("formatted tracks",formattedTracks);
-  return formattedTracks;
-}
-
-//format tracks and then remove duplicates
-const removeDuplicates = (tracks) => {
-  let count = 0;
-  
-
-  const seen = new Set();
-  return tracks.filter(track => {
-    count++;
-    console.log(count);
-    if (seen.has(track.id)) {
-      return false;
-    } else {
-      seen.add(track.id);
-      return true;
-    }
-  });
-};

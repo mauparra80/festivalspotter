@@ -2,7 +2,6 @@
 
 //filter API tracks into wanted data
 function filterTrackData(track) {
-  console.log("track from filter: ", track);
   return {
     trackId: track.id,
     name: track.name,
@@ -57,9 +56,7 @@ function storeDataInIndexedDB(data) {
     let objectStore = transaction.objectStore('tracks');
 
     //add each track in to db
-    console.log("stroring tracks now");
     data.forEach((track) => {
-      console.log("Storing Track: ", track);
       objectStore.add(track);
     });
 

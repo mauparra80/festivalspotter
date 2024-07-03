@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const WordCloudComponent = ({words}) => {
   const canvasRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.width)
+  // const [screenWidth, setScreenWidth] = useState(window.width)
   const [options, setOptions] = useState({
     width: 1400,
     height: 1200,
@@ -18,8 +18,8 @@ const WordCloudComponent = ({words}) => {
 
   // useEffect(() => {
   //   window.addEventListener('resize', () => {
-  //     setScreenWidth(screen.width);
-  //     console.log(screen.width);
+  //     setScreenWidth(screenWidth);
+  //     console.log(screenWidth);
   //   })
   // })
 
@@ -27,25 +27,28 @@ const WordCloudComponent = ({words}) => {
 
   useEffect(() => {
     const wordCount = words.length
+    const screenWidth = window.innerWidth
+    console.log("wordCount", wordCount);
+    console.log("screenWidth", window.innerWidth);
 
-    if(wordCount > 0 && wordCloud <= 50) {
-      setOptions((prev) => ({...prev, height: 500}))
-    } else if (wordCount > 50 && wordCloud <= 100) {
+    if(wordCount > 0 && wordCount <= 50) {
+      setOptions((prev) => ({...prev, height: 600}))
+    } else if (wordCount > 50 && wordCount <= 100) {
       setOptions((prev) => ({...prev, height: 1000}))
-    } else if (wordCount > 100 && wordCloud <= 150) {
+    } else if (wordCount > 100 && wordCount <= 150) {
       setOptions((prev) => ({...prev, height: 2000}))
     } else if (wordCount > 150) {
       setOptions((prev) => ({...prev, height: 2000}))
     } 
 
-    if(screen.width < 600) {
+    if(screenWidth < 600) {
       setIsMobile(true);
       setOptions((prev) => ({
         ...prev,
         width: 400,
         weightFactor: 6,
       }))
-    } else if ((screen.width >= 600) && (screen.width <= 900)) {
+    } else if ((screenWidth >= 600) && (screenWidth <= 900)) {
       setIsMobile(true);
       setOptions((prev) => ({
         ...prev,
@@ -62,7 +65,7 @@ const WordCloudComponent = ({words}) => {
     }
 
     
-  },[screenWidth, words])
+  },[words])
 
   
 

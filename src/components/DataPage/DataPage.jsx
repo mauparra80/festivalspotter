@@ -3,6 +3,7 @@ import { getWordCloudArtists } from "../WordCloudManager/getWordCloudArtists";
 import WordCloudComponent from "../WordCloudManager/WordCloudComponent";
 import ArtistTracksBox from "../ArtistTracks-Box/ArtistTracksBox";
 import './dataPage.css'
+import LoadingVisual from "../../pages/LoadingSongs/LoadingVisual";
 
 /* TODO
 - make wordcloud responsive (at least 3 stages)

@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import Profile from "./pages/Profile/Profile";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Callback from "./pages/Callback";
+import LoadingSongs from "./pages/LoadingSongs/LoadingSongs";
 
 //create layout to expand for header/footer
 const Layout = () => {
@@ -33,6 +34,10 @@ export default function Router() {
         {
           path: '/callback',
           element: <Callback />,
+        },
+        {
+          path: '/loading-songs',
+          element: <LoadingSongs />,
         },
         //catch all route for 404 
         {
