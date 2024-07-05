@@ -6,9 +6,6 @@ import './componentSlider.css'
 export default function ComponentSlider({components, indexPreset}) {
   const [componentIndex, setComponentIndex] = useState(indexPreset);
 
-  console.log("component", components)
-  console.log('index', indexPreset);
-
   function showNextComponent() {
     setComponentIndex(index => {
       if (index === components.length - 1) return 0

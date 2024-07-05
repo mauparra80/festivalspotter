@@ -32,13 +32,15 @@ const WordCloudComponent = ({words}) => {
     console.log("screenWidth", window.innerWidth);
 
     if(wordCount > 0 && wordCount <= 50) {
-      setOptions((prev) => ({...prev, height: 600}))
+      setOptions((prev) => ({...prev, height: 500}))
     } else if (wordCount > 50 && wordCount <= 100) {
-      setOptions((prev) => ({...prev, height: 1000}))
+      setOptions((prev) => ({...prev, height: 700}))
     } else if (wordCount > 100 && wordCount <= 150) {
-      setOptions((prev) => ({...prev, height: 2000}))
-    } else if (wordCount > 150) {
-      setOptions((prev) => ({...prev, height: 2000}))
+      setOptions((prev) => ({...prev, height: 1000}))
+    } else if (wordCount > 150 && wordCount <= 200) {
+      setOptions((prev) => ({...prev, height: 1200}))
+    } else if (wordCount > 200) {
+      setOptions((prev) => ({...prev, height: 1500}))
     } 
 
     if(screenWidth < 600) {
@@ -77,9 +79,9 @@ const WordCloudComponent = ({words}) => {
 
       wordCloud(canvasRef.current, {
         list: wordList,
-        gridSize: 8,
-        weightFactor: 8,
-        minSize: 12,
+        gridSize: 10,
+        weightFactor: 15,
+        minSize: 10,
         fontFamily: 'Times, serif',
         color: 'random-light',
         // color: function() {
@@ -90,6 +92,7 @@ const WordCloudComponent = ({words}) => {
         rotateRatio: 0,
         rotationSteps: 2,
         shrinkToFit: true,
+        origin: [options.width / 2,0]
       });
     }
   }, [words, options]);

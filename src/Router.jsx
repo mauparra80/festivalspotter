@@ -4,6 +4,8 @@ import Profile from "./pages/Profile/Profile";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Callback from "./pages/Callback";
 import LoadingSongs from "./pages/LoadingSongs/LoadingSongs";
+import ActionPage from "./components/ActionPage/ActionPage";
+import DataPage from "./components/DataPage/DataPage";
 
 //create layout to expand for header/footer
 const Layout = () => {
@@ -28,8 +30,12 @@ export default function Router() {
           element: <Home />,
         },
         {
-          path: '/profile',
-          element: <Profile />,
+          path: '/festival-search',
+          element: <ActionPage />,
+        },
+        {
+          path: '/festival-results',
+          element: <DataPage />,
         },
         {
           path: '/callback',

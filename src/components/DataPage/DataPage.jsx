@@ -1,38 +1,34 @@
-import React, {useEffect, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
+import { AppContext } from "../../components/AppProvider";
+import { useNavigate } from "react-router";
 import { getWordCloudArtists } from "../WordCloudManager/getWordCloudArtists";
 import WordCloudComponent from "../WordCloudManager/WordCloudComponent";
 import ArtistTracksBox from "../ArtistTracks-Box/ArtistTracksBox";
 import './dataPage.css'
 import LoadingVisual from "../../pages/LoadingSongs/LoadingVisual";
 
-/* TODO
-- make wordcloud responsive (at least 3 stages)
-  - full(current)
-  - at 1300px - medium(800px?)
-  - at 900px - small(300px)
-  - make its height responive to total artists.
-    - less artists, less height
-  - make the artists clickable going to spotify
-    - matched artists click - got to location on page
-    - unmatched artists click - go to spotify
-  -optional - make words in wordcloud colored if they match
 
-- add matched artists. 
-
-- add songs to matched artists
-
-- less important - add recomended festivals? 
-*/
-
-export default function DataPage({festivalData, matchedTracks}) {
+export default function DataPage() {
   const [artistWordCountList, setArtistWordCountList] = useState(null);
+  const {festivalData, matchedTracks} = useContext(AppContext);
+  const navigate = useNavigate()
 
+  //create wordcloud
   useEffect(() => {
-    console.log('this is festivalData from datapage',festivalData);
-  setArtistWordCountList(getWordCloudArtists(festivalData));
-  },[festivalData])
+    if (!festivalData) {
+      //return to search if ther is no festivalData
+      console.log('this is festivalData from datapage inside !festivalData',festivalData);
+      navigate('/festival-search');
+      return;
+    }
 
-  
+    console.log('this is festivalData from datapage',festivalData);
+    setArtistWordCountList(getWordCloudArtists(festivalData, navigate));
+  },[])
+
+  if (!festivalData) {
+    return null; // Render nothing while redirecting
+  }
 
   return (
 
@@ -50,7 +46,7 @@ export default function DataPage({festivalData, matchedTracks}) {
         <h1 className="font-poetsen mb-10 mt-48 text-center">What artists will be there?</h1>
         {artistWordCountList && <WordCloudComponent words={artistWordCountList} />}
         
-        <h1 className="font-poetsen mt-64 text-center">What artists will you recognize?</h1>
+        <h1 className="font-poetsen mt-52 text-center">What artists will you recognize?</h1>
         <div className="artists-tracks-container">
         {matchedTracks && <ArtistTracksBox tracks={matchedTracks} festivalData={festivalData}/>}
       </div>

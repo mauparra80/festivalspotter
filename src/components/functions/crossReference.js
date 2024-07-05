@@ -7,6 +7,7 @@ export default function crossReference(tracks, festivalArtists) {
     lowerCaseFestivalArtists.push(artist.toLowerCase());
   });
 
+  console.log("Tracks inside crossref: ", tracks);
   tracks.forEach(track => {
 
     //check if artist exists in ACLData

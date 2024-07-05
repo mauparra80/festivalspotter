@@ -1,13 +1,15 @@
 import React, {useState, useEffect, useContext} from "react";
+import { useNavigate } from "react-router";
 import states from "./stateData";
 import Select from "react-select";
 import getJamBaseEvent from '../functions/jamBaseManager/jamBaseAPI'
 import './festivalSearchBox.css'
+import crossReference from "../../components/functions/crossReference";
 import { AppContext } from "../AppProvider";
 import { clearDatabase } from "../functions/indexedDBManager/indexedDBManager";
 
 
-export default function FestivalSearchBox({dbExists}) {
+export default function FestivalSearchBox() {
   //[{stateGeoInfo,...}]
   const [selectedState, setSelectedState] = useState(null); 
   //{festivalData}
@@ -16,8 +18,13 @@ export default function FestivalSearchBox({dbExists}) {
   const [stateFestivals, setStateFestivals] = useState([]);
   const [festivalListIsLoading, setFestivalListIsLoading] = useState(true);
   const [disableFestivalSearch, setDisableFestivalSearch] = useState(true);
+  // const [matchedTracks, setMatchedTracks] = useState([]);
 
   const {setFestivalData} = useContext(AppContext);
+  const {userTracks} = useContext(AppContext);
+  const {dbExists} = useContext(AppContext);
+  const {setMatchedTracks} = useContext(AppContext);
+  const navigate = useNavigate();
  
 
   //set selected State
@@ -56,8 +63,21 @@ export default function FestivalSearchBox({dbExists}) {
     }
   }, [selectedState])
 
+  //festival submitted
   const submitSearch = () => {
     setFestivalData(selectedFestival);
+    if(selectedFestival) {
+      if(selectedFestival.performer) {
+        let festivalArtists = [];
+        selectedFestival.performer.forEach((performer) => {
+          festivalArtists.push(performer.name);
+        })
+
+        console.log("Tracks inside festivalsearch: ", userTracks)
+        setMatchedTracks(crossReference(userTracks, festivalArtists));
+        navigate('/festival-results');
+      }
+    }
   }
 
   //on dbExists change, reset search box (might not be used)

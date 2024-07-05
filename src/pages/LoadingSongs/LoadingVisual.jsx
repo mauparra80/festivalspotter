@@ -8,7 +8,7 @@ export default function LoadingVisual() {
         <div id="loading-box-container">
           <div id="loading-box"></div>
         </div>
-        <h1 id='loading-text'>Loading</h1>
+        <h2 id='loading-text'>Loading Tracks</h2>
         <div className="square"></div>
       </div>
       

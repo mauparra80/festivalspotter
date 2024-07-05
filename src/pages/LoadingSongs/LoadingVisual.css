@@ -7,6 +7,8 @@
   width: 300px;
   height: 200px;
   color: var(--color-red);
+  font-family: 'Roboto';
+  font-size: 2rem;
   border-radius: 5px;
   /* overflow: hidden; */
 }
@@ -14,7 +16,7 @@
 #loading-box-container{
   position: absolute;
   overflow: hidden;
-  height: 80px;
+  height: 60px;
   width: 100%;
   border-radius: 20px;
 }
@@ -34,7 +36,7 @@
 
 #loading-text::before{
   position: absolute;
-  content: "Loading";
+  content: "Loading Songs";
   color: var(--color-blue);
   clip-path: polygon(0 0, 0 0, 0% 100%, 0 100%);
   animation: loadingTextSlide 5s cubic-bezier( 0.68, -0.55, 0.265, 1.55 ) infinite;
@@ -59,7 +61,7 @@
 
 @keyframes boxSlide {
   0% {
-    transform: translateX(-150px) rotateZ(0);
+    transform: translateX(-160px) rotateZ(0);
   }
   50% {
     transform: translateX(150px) rotateZ(360deg);
@@ -67,7 +69,7 @@
     background-color: var(--color-blue);
   }
   100% {
-    transform: translateX(-150px) rotateZ(0deg);
+    transform: translateX(-160px) rotateZ(0deg);
   }
 }
 

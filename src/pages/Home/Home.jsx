@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useContext} from "react";
+import { useNavigate } from "react-router";
 import { getAllTracks, clearDatabase, checkIfDatabaseContainsStores } from "../../components/functions/indexedDBManager/indexedDBManager";
 import { authorizeSpotifyUser } from "../../components/functions/spotifyManager/spotifyAPI";
 import crossReference from "../../components/functions/crossReference";
@@ -10,14 +11,11 @@ import { AppContext } from "../../components/AppProvider";
 
 
 export default function Home() {
-  const [dbExists, setDbExists] = useState(null);
-  const [userTracks, setUserTracks] = useState(null);
-  const [matchedTracks, setMatchedTracks] = useState([]);
-  // const [festivalData, setFestivalData] = useState(null);
-
-  
-
-  const {festivalData} = useContext(AppContext);
+  // const [dbExists, setDbExists] = useState(null);
+  // const [userTracks, setUserTracks] = useState(null);
+  // const [matchedTracks, setMatchedTracks] = useState([]);
+  const { festivalData, setUserTracks, setDbExists, dbExists, matchedTracks } = useContext(AppContext);
+  const navigate = useNavigate();
   
   //check and set if we already have users spotify data and setUserTracks
   useEffect(() => {
@@ -25,13 +23,16 @@ export default function Home() {
       try {
         const hasStores = await checkIfDatabaseContainsStores('tracksDatabase');
         console.log('Database has stores:', hasStores);
+        console.log('dbExists inside home', dbExists);
         if(hasStores) {
           setDbExists(hasStores);
           getAllTracks((tracks) => {
-            setUserTracks(tracks);
+            setUserTracks(tracks)
           })
+          navigate('/festival-search');
         } else {
           setDbExists(false);
+          navigate('/festival-search');
         }
       } catch (error) {
         console.error(error);
@@ -41,27 +42,12 @@ export default function Home() {
   }, []);
 
 
-  //when festivalData changes, initiate data presentation.
-  //TODO: create functions to get all dat and update it here.
-  useEffect(() => {
-    if(festivalData) {
-      if(festivalData.performer) {
-        let festivalArtists = [];
   
-        festivalData.performer.forEach((performer) => {
-          festivalArtists.push(performer.name);
-        })
-
-        setMatchedTracks(crossReference(userTracks, festivalArtists))
-      }
-    }
-    
-  },[festivalData])
 
   return (
   <>
-    {festivalData ? <DataPage festivalData={festivalData} matchedTracks={matchedTracks}/> : 
-    <ActionPage  dbExists={dbExists} />}
+    {/* {festivalData ? <DataPage festivalData={festivalData} matchedTracks={matchedTracks}/> : 
+    <ActionPage  dbExists={dbExists} />} */}
   </>
   )
 }
