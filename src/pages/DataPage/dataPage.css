@@ -1,6 +1,6 @@
 
 .data-page {
-  margin-top: 100px;
+  /* margin-top: 100px; */
   margin-bottom: 200px;
 }
 
@@ -51,4 +51,11 @@
   margin-top: 50px;
   max-width: 1300px;
   width:100%;
+}
+
+.newSearch-btn {
+  padding: 20px 30px;
+  font-size: 1.2rem;
+  color: var(--color-gunmetal);
+  background-color: var(--color-Tan);
 }

@@ -1,11 +1,6 @@
 import React, {useEffect, useState, useContext} from "react";
 import { useNavigate } from "react-router";
 import { getAllTracks, clearDatabase, checkIfDatabaseContainsStores } from "../../components/functions/indexedDBManager/indexedDBManager";
-import { authorizeSpotifyUser } from "../../components/functions/spotifyManager/spotifyAPI";
-import crossReference from "../../components/functions/crossReference";
-import FestivalSearchBox from "../../components/FestivalSearchBox/FestivalSearchBox";
-import DataPage from "../../components/DataPage/DataPage";
-import ActionPage from "../../components/ActionPage/ActionPage";
 import { AppContext } from "../../components/AppProvider";
 
 

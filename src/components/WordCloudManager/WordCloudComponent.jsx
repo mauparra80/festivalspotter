@@ -79,7 +79,7 @@ const WordCloudComponent = ({words}) => {
 
       wordCloud(canvasRef.current, {
         list: wordList,
-        gridSize: 10,
+        gridSize: 8,
         weightFactor: 15,
         minSize: 10,
         fontFamily: 'Times, serif',

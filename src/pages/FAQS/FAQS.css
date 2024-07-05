@@ -1,0 +1,57 @@
+.faqs-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 2560px;
+
+  background-image: url('../../assets/img/loginBackground.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: center;
+
+  background: var(--color-gunmetal);
+  border-radius: 20px;;
+  box-shadow: 0px 5px 50px 50px rgba(0, 0, 0, 0.437);
+  /* width: clamp(400px, 100%, 1200px); */
+  max-width: 1200px;
+  width: 90%;
+  margin: 50px;
+  padding: 20px;
+  background-color: var(--color-lightTan);
+  border: 10px solid var(--color-gunmetal)
+}
+
+.faqs-title {
+  color: var(--color-red);
+}
+
+.faqs-list{
+  padding: 20px;
+  list-style:circle;
+  color: var(--color-gunmetal);
+}
+.faqs-list hr{
+  border-color: var(--color-red)
+}
+
+.faqs-item{
+  margin-bottom: 20px;
+}
+.faqs-item h2{
+  color: var(--color-gunmetal);
+  font-family: "Poetsen One", sans-serif;
+  font-size: 1.5rem;
+}
+.faqs-item p{
+  font-size: 1.2rem;
+}

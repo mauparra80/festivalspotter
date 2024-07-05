@@ -1,14 +1,17 @@
 import { AppContext } from "../../components/AppProvider";
 import { useContext, useEffect } from "react";
 import './ActionPage.css'
-import FestivalSearchBox from '../FestivalSearchBox/FestivalSearchBox';
-import { checkIfDatabaseContainsStores, getAllTracks } from "../functions/indexedDBManager/indexedDBManager";
-import Login from '../Login/Login';
-import IntroSlide from '../ComponentSlider/IntroSlide';
-import ComponentSlider from '../ComponentSlider/ComponentSlider';
+import FestivalSearchBox from '../../components/FestivalSearchBox/FestivalSearchBox';
+import { checkIfDatabaseContainsStores, getAllTracks } from "../../components/functions/indexedDBManager/indexedDBManager";
+import Login from '../../components/Login/Login';
+import IntroSlide from '../../components/ComponentSlider/IntroSlide';
+import ComponentSlider from '../../components/ComponentSlider/ComponentSlider';
+import Header from "../../components/Header/Header";
+
 import introImgLogin from '../../assets/img/introImg-login.webp';
 import introImgResults from '../../assets/img/introImg-results.webp';
 import introImgSearch from '../../assets/img/introImg-search.webp';
+import { useLocation } from "react-router";
 
 
 
@@ -19,28 +22,27 @@ const SLIDES = [
 ]
 
 export default function ActionPage() {
-
   const {dbExists, setDbExists, setUserTracks} = useContext(AppContext);
-  console.log("dbExists is ",dbExists);
+  const location = useLocation();
 
   //set dbExists and userTracks on mount
   useEffect(() => {
     const checkIfDbExists = async () => {
       const hasStores = await checkIfDatabaseContainsStores('tracksDatabase');
-    setDbExists(hasStores);
+      setDbExists(hasStores);
+      if (hasStores) {getAllTracks((tracks) => {setUserTracks(tracks)});}
     }
     checkIfDbExists();
-
-    getAllTracks((tracks) => {setUserTracks(tracks)});
   }, [])
 
   return (
     <>
       <div className="action-page-container">
+        <Header curLocation={location.pathname}/>
         <div className="action-container">
           <div className="intro">
             <div className='component-slider'>
-              <ComponentSlider components={SLIDES} indexPreset={dbExists ? 0 : 1}/>
+              <ComponentSlider components={SLIDES} indexPreset={dbExists ? 1 : 0}/>
             </div>
           </div>
 

@@ -1,11 +1,11 @@
 import {createBrowserRouter, RouterProvider, Outlet} from "react-router-dom";
 import Home from "./pages/Home/Home";
-import Profile from "./pages/Profile/Profile";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import Callback from "./pages/Callback";
 import LoadingSongs from "./pages/LoadingSongs/LoadingSongs";
-import ActionPage from "./components/ActionPage/ActionPage";
-import DataPage from "./components/DataPage/DataPage";
+import ActionPage from "./pages/ActionPage/ActionPage";
+import DataPage from "./pages/DataPage/DataPage";
+import FAQS from "./pages/FAQS/FAQS";
 
 //create layout to expand for header/footer
 const Layout = () => {
@@ -44,6 +44,10 @@ export default function Router() {
         {
           path: '/loading-songs',
           element: <LoadingSongs />,
+        },
+        {
+          path: '/FAQS',
+          element: <FAQS/>,
         },
         //catch all route for 404 
         {
