@@ -20,9 +20,16 @@
   box-sizing: border-box;
   transition: translate 0.5s ease-in-out;
 }
+.slider-item h1{
+  font-size: 2rem;
+}
+.slider-item p{
+  font-size: 1rem;
+}
 
 .intro-slide-img {
   object-fit: cover;
+  max-width: 350px;
   width: 100%;
   display: block;
 }
