@@ -9,7 +9,7 @@ const WordCloudComponent = ({words}) => {
   const [isMobile, setIsMobile] = useState(false);
   // const [screenWidth, setScreenWidth] = useState(window.width)
   const [options, setOptions] = useState({
-    width: 1400,
+    width: 1300,
     height: 1200,
     weightFactor: 10,
   });
@@ -61,7 +61,7 @@ const WordCloudComponent = ({words}) => {
       setIsMobile(false);
       setOptions((prev) => ({
         ...prev,
-        width: 1400,
+        width: 1300,
         weightFactor: 10,
       }))
     }
