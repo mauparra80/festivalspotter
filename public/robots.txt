@@ -1,0 +1,12 @@
+# robots.txt for https://yourwebsite.com
+
+# Allow all crawlers complete access
+User-agent: *
+Disallow: /callback
+
+# Disallow specific folders
+Disallow: /admin/
+Disallow: /private/
+
+# Indicate the location of the XML sitemap
+Sitemap: https://festivalspotter.com/sitemap.xml

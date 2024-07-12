@@ -64,7 +64,7 @@
   width: 3px; /* Adjust the width as needed */
   background: linear-gradient(to bottom, transparent, var(--color-blue));
   background-size: 100% 200%;
-  border-radius: 5px;
+  border-radius: 10px;
   animation: gradient-border-down 2s linear infinite;
 }
 
