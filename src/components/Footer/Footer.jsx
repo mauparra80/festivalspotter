@@ -22,7 +22,7 @@ export default function Footer() {
     }, [location])
 
     return (
-        <div className={`footer-container ${(location.pathname === '/loading-songs') ? 'hide' : ''}`}>
+        <div className={`footer-container ${showFooter ? '' : 'hide'}`}>
 
             <div className="footer-section footer-contact-about">
                 <div className="boxFrame-1"></div>
