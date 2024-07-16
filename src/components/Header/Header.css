@@ -8,6 +8,7 @@
   height: 50px;
   width: 100%;
   padding: 10px 20px 0 20px;
+  margin-bottom: 50px;
   /* margin-bottom: 5rem; */
   background-color: var(--color-lightTan);
   border-bottom: 5px solid var(--color-gunmetal);
