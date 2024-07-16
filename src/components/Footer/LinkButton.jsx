@@ -3,7 +3,7 @@ export default function LinkButton({icon, name, link, reverse}) {
     
 
     return(
-        <a href={link} className={`flex justify-center items-center w-52 max-w-40 z-10 relative  ${reverse ? 'flex-row-reverse' : ''}`}>
+        <a href={link} target="_blank" className={`flex justify-center items-center w-44 z-10 relative  ${reverse ? 'flex-row-reverse' : ''}`}>
             <div className='icon-container flex-shrink-0 flex items-center justify-center w-10 h-10 object-cover rounded-xl m-2 bg-white'>
                 <img src={icon} alt={name} className='h-8' />
             </div>

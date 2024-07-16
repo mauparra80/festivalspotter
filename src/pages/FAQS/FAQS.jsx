@@ -10,18 +10,18 @@ export default function FAQS() {
         <h1 className='faqs-title'>FAQS</h1>
         <ul className='faqs-list'>
           <li className='faqs-item'>
-            <h2>How are you using my spotify information?</h2>
-            <p>FestivalSpot only collects your spotify tracks and saves them to your own browser so nothing is stored in the cloud.</p>
+            <h2>How is FestivalSpotter using my spotify information?</h2>
+            <p>FestivalSpotter only collects your spotify tracks and saves them to your own browser so nothing is stored in the cloud.</p>
             <hr />
           </li>
           <li className="faqs-item">
             <h2>I saved some new songs in my spotify but they are not showing up as matches</h2>
-            <p>Your tracks are initially saved when you sign into spotify, then they are kept in your browsers memory. to refresh your spotify tracks, just click the refresh button below the search button or clear your browser cookies</p>
+            <p>Your tracks are initially saved when you sign into <a href="https://open.spotify.com/" target='_blank'>spotify</a>, then they are kept in your browsers memory. to refresh your spotify tracks, just click the refresh button below the search button or clear your browser cookies</p>
             <hr />
           </li>
           <li className="faqs-item">
             <h2>I cannot find the festival I am looking for</h2>
-            <p>Unfortunately, the festivals available are limited to the festivals provided by Jambase. If your festival does not show up, it might have already happened or it is happening too far into the future</p>
+            <p>Unfortunately, the festivals available are limited to the festivals provided by <a href="https://www.jambase.com/" target='_blank'>Jambase</a>. If your festival does not show up, it might have already happened or it is happening too far into the future</p>
             <hr />
           </li>
         </ul>

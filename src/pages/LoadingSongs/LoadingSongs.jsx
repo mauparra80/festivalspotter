@@ -7,6 +7,7 @@ export default function LoadingSongs() {
   const location = useLocation();
   const navigate = useNavigate();
   const [token, setToken] = useState('');
+  const [tracksStored, setTracksStored] = useState(false);
 
   //setting token from callback
   useEffect(() => {
@@ -15,41 +16,44 @@ export default function LoadingSongs() {
     }
   }, [location.state]); 
 
-  async function getTracks() {
-    if (token) {
-      let tracks = [];
-      try {
-        const [playlistTracks, savedTracks, albumTracks] = await Promise.all([
-          fetchAllPlaylistTracks(token),
-          fetchAllSavedTracks(token),
-          fetchAllAlbumTracks(token),
-        ])
-
-        console.log("saved Tracks: ", savedTracks);
-        console.log("Playlist Tracks: ", playlistTracks);
-        console.log("album tracks: ", albumTracks);
-
-        tracks.push(...savedTracks);
-        tracks.push(...playlistTracks);
-        tracks.push(...albumTracks);
-        const uniqueTracks = removeDuplicates(tracks);
-    
-        //filter and store tracks
-        let filteredTracks = uniqueTracks.map(filterTrackData);
-        console.log("filtered tracks right before storing, ", filteredTracks);
-        storeDataInIndexedDB(filteredTracks);
-
-        //go to Main page
-        navigate('/');
-
-      } catch (error) {
-        console.error("Error fetching tracks: ", error);
-      }
-
+  useEffect(() => {
+    async function getTracks() {
+      if (token && !tracksStored) {
+        let tracks = [];
+        try {
+          const [playlistTracks, savedTracks, albumTracks] = await Promise.all([
+            fetchAllPlaylistTracks(token),
+            fetchAllSavedTracks(token),
+            fetchAllAlbumTracks(token),
+          ])
+  
+          console.log("saved Tracks: ", savedTracks);
+          console.log("Playlist Tracks: ", playlistTracks);
+          console.log("album tracks: ", albumTracks);
+  
+          tracks.push(...savedTracks);
+          tracks.push(...playlistTracks);
+          tracks.push(...albumTracks);
+          const uniqueTracks = removeDuplicates(tracks);
       
+          //filter and store tracks
+          let filteredTracks = uniqueTracks.map(filterTrackData);
+          console.log("filtered tracks right before storing, ", filteredTracks);
+          storeDataInIndexedDB(filteredTracks);
+          setTracksStored(true);
+  
+          //go to Main page
+          navigate('/');
+  
+        } catch (error) {
+          console.error("Error fetching tracks: ", error);
+        }
+      }
     }
-  }
-  getTracks();
+    getTracks();
+  }, [token, navigate])
+
+  
 
   return (
     <>

@@ -28,7 +28,7 @@
   margin: 50px;
   padding: 20px;
   background-color: var(--color-lightTan);
-  border: 10px solid var(--color-gunmetal)
+  border: 5px solid var(--color-gunmetal)
 }
 
 .faqs-title {

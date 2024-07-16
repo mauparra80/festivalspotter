@@ -18,7 +18,7 @@ export default function Header({curLocation}) {
         <div className="logo-img-container">
           <img className="logo-medium" src={festivalSpotLogo} alt="Festival Spot Logo" />
         </div>
-        <h1 id="header-logo-name" className="font-poetsen">Festival Spot</h1>
+        <h1 id="header-logo-name" className="font-poetsen">FestivalSpotter</h1>
       </div>
       <div className="header-nav-container">
         {!curLocation && 

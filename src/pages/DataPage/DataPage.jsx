@@ -58,7 +58,7 @@ export default function DataPage() {
         <h1 className="font-poetsen mb-10 mt-48 text-center">What artists will be there?</h1>
         {artistWordCountList && <WordCloudComponent words={artistWordCountList} />}
         
-        {matchedTracks? (
+        {(matchedTracks.length > 0) ? (
           <>
             <h1 ref={targetRef} className="font-poetsen mt-52 text-center">What artists will you recognize?</h1>
             <div className="artists-tracks-container">

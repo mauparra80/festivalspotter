@@ -62,7 +62,7 @@ const WordCloudComponent = ({words}) => {
       setOptions((prev) => ({
         ...prev,
         width: 1300,
-        weightFactor: 10,
+        weightFactor: 12,
       }))
     }
 
@@ -80,7 +80,7 @@ const WordCloudComponent = ({words}) => {
       wordCloud(canvasRef.current, {
         list: wordList,
         gridSize: 8,
-        weightFactor: 15,
+        weightFactor: 12,
         minSize: 10,
         fontFamily: 'Times, serif',
         color: 'random-light',
