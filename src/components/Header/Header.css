@@ -16,6 +16,9 @@
 .logo-container {
   display: flex;
 }
+.logo-container:hover {
+  cursor: pointer;
+}
 
 .logo-img-container {
   flex-shrink: 0;

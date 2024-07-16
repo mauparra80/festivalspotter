@@ -50,6 +50,7 @@ a {
 }
 a:hover {
   color: color-mix(in hsl shorter hue, var(--color-blue) 80%, var(--color-red) 10%);
+  cursor: pointer;
 }
 
 body {
@@ -58,18 +59,19 @@ body {
   min-height: 100vh;
   display: flex;
   place-items: center;
+  overflow-x: hidden;
 }
 #root{
   margin: 0;
   min-width: 100%;
   min-height: 100%;
   display: flex;
+  flex-direction: column;
   place-items: center;
   align-items: center;
   justify-content: center;
   overflow-x: hidden;
-
-  
+  overflow-y: hidden;
 }
 
 h1 {

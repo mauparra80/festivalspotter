@@ -6,6 +6,7 @@ import LoadingSongs from "./pages/LoadingSongs/LoadingSongs";
 import ActionPage from "./pages/ActionPage/ActionPage";
 import DataPage from "./pages/DataPage/DataPage";
 import FAQS from "./pages/FAQS/FAQS";
+import Footer from "./components/Footer/Footer";
 
 //create layout to expand for header/footer
 const Layout = () => {
@@ -13,6 +14,7 @@ const Layout = () => {
   return (
     <>
       <Outlet />
+      <Footer />
     </>
   )
 }

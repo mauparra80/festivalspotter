@@ -1,15 +1,20 @@
 
-
+import { useNavigate } from "react-router";
 import festivalSpotLogo from "../../assets/img/FestivalSpot-Logo.png";
 import './Header.css';
 import { Search, CircleHelp } from "lucide-react";
 
 
 export default function Header({curLocation}) {
+  const navigate = useNavigate();
+
+  const returnHome = () => {
+    navigate('/');
+  }
 
   return (
     <div className="header-container">
-      <div className="logo-container">
+      <div className="logo-container" onClick={() => returnHome()}>
         <div className="logo-img-container">
           <img className="logo-medium" src={festivalSpotLogo} alt="Festival Spot Logo" />
         </div>

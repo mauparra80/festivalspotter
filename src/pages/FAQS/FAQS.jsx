@@ -5,7 +5,7 @@ export default function FAQS() {
 
   return (
     <div className="faqs-page-container">
-      <Header/>
+      <Header curLocation={true}/>
       <div className="content-container">
         <h1 className='faqs-title'>FAQS</h1>
         <ul className='faqs-list'>
