@@ -7,12 +7,14 @@ import ActionPage from "./pages/ActionPage/ActionPage";
 import DataPage from "./pages/DataPage/DataPage";
 import FAQS from "./pages/FAQS/FAQS";
 import Footer from "./components/Footer/Footer";
+import ScrollToTop from "./components/functions/ScrollToTop";
 
 //create layout to expand for header/footer
 const Layout = () => {
 
   return (
     <>
+      <ScrollToTop/>
       <Outlet />
       <Footer />
     </>
