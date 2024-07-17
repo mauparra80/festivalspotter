@@ -151,6 +151,8 @@ function clearDatabase() {
   request.onblocked = function() {
     console.warn('Database deletion blocked');
   };
+
+  window.location.reload();
  
 }
 
